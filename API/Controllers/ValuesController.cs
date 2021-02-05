@@ -22,6 +22,7 @@ namespace API.Controllers
 
         // GET api/values
         [HttpGet]
+        // Async is helpful for larger datasets
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {
             var values = await _context.Values.ToListAsync();
