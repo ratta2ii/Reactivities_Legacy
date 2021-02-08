@@ -5,6 +5,7 @@ using Domain;
 using MediatR;
 using Persistence;
 
+
 namespace Application.Activities
 {
     public class Details
@@ -28,6 +29,7 @@ namespace Application.Activities
 
                 return activity;
             }
+
         }
     }
 }

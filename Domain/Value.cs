@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace Domain
 {
     public class Value
@@ -7,4 +8,5 @@ namespace Domain
         public int Id { get; set; }
         public string Name { get; set; }
     }
+
 }

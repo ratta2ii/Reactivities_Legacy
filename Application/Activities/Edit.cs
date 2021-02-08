@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Persistence;
 
+
 namespace Application.Activities
 {
     public class Edit
@@ -47,6 +48,7 @@ namespace Application.Activities
 
                 throw new Exception("Problem saving changes");
             }
+
         }
     }
 }
