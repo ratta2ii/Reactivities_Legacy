@@ -18,6 +18,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
+        // api/activities
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> List()
         {
