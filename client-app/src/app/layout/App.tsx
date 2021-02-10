@@ -7,6 +7,21 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 
 const App = () => {
     const [activities, setActivities] = useState<IActivity[]>([]);
+    const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+        null
+    );
+    const [editMode, setEditMode] = useState(false);
+
+    const handleSelectActivity = (id: string) => {
+        // Once filtered, we know the [0] index of the array will be our activity (only item in [])
+        setSelectedActivity(activities.filter((a) => a.id === id)[0]);
+    };
+
+    const handleOpenCreateForm = () => {
+        console.log("I am in the handleopencreate method")
+        setSelectedActivity(null);
+        setEditMode(true);
+    }
 
     useEffect(() => {
         axios
@@ -18,15 +33,48 @@ const App = () => {
 
     return (
         <Fragment>
-            <NavBar />
-            <Container style={{marginTop: '7em'}}>
-                <ActivityDashboard activities={activities} />
+            <NavBar openCreateForm={handleOpenCreateForm} />
+            <Container style={{ marginTop: "7em" }}>
+                <ActivityDashboard
+                    activities={activities}
+                    selectActivity={handleSelectActivity}
+                    //! The "!" after the variable is overriding the type safefty (Okay to be IActivity | null as defined in the hook above (See IProps in child))
+                    selectedActivity={selectedActivity!}
+                    editMode={editMode}
+                    setEditMode={setEditMode}
+                    setSelectedActivity={setSelectedActivity}
+                />
             </Container>
         </Fragment>
     );
 };
 
 export default App;
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 //! EXAMPLE 1: Class component calling the "value" api
 // import React, { Component } from "react";

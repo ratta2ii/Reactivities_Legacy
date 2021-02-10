@@ -1,8 +1,13 @@
 import React from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
 
-const NavBar = () => {
+interface IProps {
+    openCreateForm: () => void;
+}
 
+const NavBar: React.FC<IProps> = ({openCreateForm}) => {
+
+    
     return (
         <Menu fixed="top" inverted>
             <Container>
@@ -13,7 +18,8 @@ const NavBar = () => {
                 <Menu.Item name="Activities" />
                 <Menu.Item>
                     {/* //! This button is causing the depracated error (needs ref ???) */}
-                    <Button color="blue" content="Create Activity" />
+            {console.log("Inside the Nav component")}
+                    <Button onClick={openCreateForm} color="blue" content="Create Activity" />
                 </Menu.Item>
             </Container>
         </Menu>
