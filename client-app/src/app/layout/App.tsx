@@ -15,19 +15,49 @@ const App = () => {
     const handleSelectActivity = (id: string) => {
         // Once filtered, we know the [0] index of the array will be our activity (only item in [])
         setSelectedActivity(activities.filter((a) => a.id === id)[0]);
+        setEditMode(false);
     };
 
     const handleOpenCreateForm = () => {
-        console.log("I am in the handleopencreate method")
         setSelectedActivity(null);
         setEditMode(true);
-    }
+    };
+
+    const handleCreateActivity = (activity: IActivity) => {
+        setActivities([...activities, activity]);
+        setSelectedActivity(activity);
+        setEditMode(false);
+    };
+
+    const handleEditActivity = (activity: IActivity) => {
+        setActivities([
+            ...activities.filter((a) => a.id !== activity.id),
+            activity,
+        ]);
+        setSelectedActivity(activity);
+        setEditMode(false);
+    };
+
+    const handleDeleteActivity = (id: string) => {
+        setActivities([...activities.filter((a) => a.id !== id)]);
+    };
 
     useEffect(() => {
+        // axios
+        //     .get<IActivity[]>("http://localhost:5000/api/activities")
+        //     .then((response) => {
+        //         setActivities(response.data);
+        //     });
+        //* This would be just passing in the response.date to hook, but parsing date here
         axios
             .get<IActivity[]>("http://localhost:5000/api/activities")
             .then((response) => {
-                setActivities(response.data);
+                let activitiesArray: IActivity[] = [];
+                response.data.forEach((activity) => {
+                    activity.date = activity.date.split(".")[0];
+                    activitiesArray.push(activity);
+                });
+                setActivities(activitiesArray);
             });
     }, []);
 
@@ -38,11 +68,14 @@ const App = () => {
                 <ActivityDashboard
                     activities={activities}
                     selectActivity={handleSelectActivity}
-                    //! The "!" after the variable is overriding the type safefty (Okay to be IActivity | null as defined in the hook above (See IProps in child))
+                    //! The "!" after the variable is overriding the type safefty (Okay to be IActivity | null as defined in the hook above (See IProps in child also))
                     selectedActivity={selectedActivity!}
                     editMode={editMode}
                     setEditMode={setEditMode}
                     setSelectedActivity={setSelectedActivity}
+                    createActivity={handleCreateActivity}
+                    editActivity={handleEditActivity}
+                    deleteActivity={handleDeleteActivity}
                 />
             </Container>
         </Fragment>

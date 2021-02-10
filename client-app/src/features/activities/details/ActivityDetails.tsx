@@ -14,8 +14,7 @@ const ActivityDetails: React.FC<IProps> = ({
     setSelectedActivity,
 }) => {
 
-
-    //! Find more ideal solution (null is throwing an error)
+    //! Find more ideal solution (null activity is throwing an error)
     if (!activity) return null;
 
     return (
